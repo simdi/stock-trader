@@ -1,0 +1,17 @@
+<template>
+	<div>
+		<h1>Portfolio Stock component</h1>
+	</div>
+</template>
+
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator';
+
+@Component
+export default class StockComponent extends Vue {
+
+}
+</script>
+
+<style scoped lang="scss">
+</style>
