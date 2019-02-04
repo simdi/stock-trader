@@ -1,12 +1,26 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+		<HeaderComponent></HeaderComponent>
     </div>
     <router-view/>
   </div>
 </template>
+
+<script lang="ts">
+	import { Component, Prop, Vue } from 'vue-property-decorator';
+	import HeaderComponent from './views/shared-views/Header.vue';
+
+	@Component({
+		components: {
+			HeaderComponent
+		}
+	})
+	export default class AppComponent extends Vue {
+
+	}
+</script>
+
 
 <style lang="scss">
 #app {
@@ -17,7 +31,6 @@
   color: #2c3e50;
 }
 #nav {
-  padding: 30px;
   a {
     font-weight: bold;
     color: #2c3e50;
