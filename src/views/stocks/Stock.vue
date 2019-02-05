@@ -1,6 +1,8 @@
 <template>
-	<div>
-		<h1>Stocks stock component</h1>
+	<div class="col-sm-6 col-md-4">
+		<div class="panel panel-succcess">
+
+		</div>
 	</div>
 </template>
 

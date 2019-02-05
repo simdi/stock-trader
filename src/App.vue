@@ -1,15 +1,13 @@
 <template>
   <div id="app">
-    <div id="nav">
-		<HeaderComponent></HeaderComponent>
-    </div>
+	<HeaderComponent></HeaderComponent>
     <router-view/>
   </div>
 </template>
 
 <script lang="ts">
 	import { Component, Prop, Vue } from 'vue-property-decorator';
-	import HeaderComponent from './views/shared-views/Header.vue';
+	import HeaderComponent from './components/shared-views/Header.vue';
 
 	@Component({
 		components: {
