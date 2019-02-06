@@ -23,8 +23,15 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 
 import { Stock } from '@/models';
+import { BUY_STOCKS } from '@/store/types';
+import { mapActions } from 'vuex';
 
 @Component({
+	computed: {
+		...mapActions('PortfolioModule', {
+			BUY_STOCKS
+		}),
+	},
 	props: {
 		stock: {
 			type: Object as () => Stock,
@@ -36,17 +43,20 @@ export default class StockComponent extends Vue {
 	@Prop() public stock!: Stock;
 
 	private buyStock(): void {
-		const order: Stock = <Stock> {
+		const stock: Stock = <Stock> {
 			id: this.stock.id,
 			name: this.stock.name,
 			price: this.stock.price,
 			quantity: this.stock.quantity
 		};
-		console.log('Payload', order);
+		console.log('Payload', stock);
+		this.$store.dispatch(`PortfolioModule/${BUY_STOCKS}`, stock);
 	}
 	// Computed methods
 	validateInput(quantity: number): Boolean {
-		return (quantity <= 0 || !Number.isInteger(quantity)) ? true : false;
+		console.log(quantity);
+		return false;
+		// return (quantity <= 0 || !Number.isInteger(quantity)) ? true : false;
 	}
 }
 </script>

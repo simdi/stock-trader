@@ -1,18 +1,26 @@
 <template>
     <div class="home">
-        <img alt="Vue logo" src="../assets/logo.png">
-        <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+        <h1>Trade or View your portfolio</h1>
+		<h6>You may Save & Load your data</h6>
+		<h6>Click on 'End Day' to begin a New Day!</h6>
+		<hr>
+		<p>Your Funds: {{ funds }}</p>
     </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import { mapGetters } from 'vuex';
+import { GET_FUNDS } from '@/store/types';
 
 @Component({
 	components: {
-		HelloWorld,
 	},
+	computed: {
+		...mapGetters('PortfolioModule', {
+			funds: GET_FUNDS
+		})
+	}
 })
 export default class Home extends Vue {
 

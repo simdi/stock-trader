@@ -1,5 +1,5 @@
 import { Stock } from "@/models";
-import { BUY_STOCKS, SELL_STOCKS } from '@/store/types';
+import { BUY_STOCKS, SELL_STOCKS, GET_FUNDS } from '@/store/types';
 
 const state = {
 	funds: 10000,
@@ -34,7 +34,7 @@ const actions: any = {
 };
 
 const getters: any = {
-	stockPortfolio (state: any, getters: any): Stock {
+	stockPortfolio(state: any, getters: any): Stock {
 		return state.stocks.map((stock: Stock) => {
 			const record = getters.stocks.find((x: Stock) => x.id === stock.id);
 			return {
@@ -45,12 +45,13 @@ const getters: any = {
 			};
 		});
 	},
-	funds(): any {
+	[GET_FUNDS](): any {
 		return state.funds;
 	}
 };
 
 export default {
+	namespaced: true,
 	state,
 	mutations,
 	actions,
