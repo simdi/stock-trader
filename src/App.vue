@@ -1,15 +1,16 @@
 <template>
-  <div id="app">
-	<HeaderComponent></HeaderComponent>
-	<div class="container">
-    	<router-view/>
+	<div id="app">
+		<HeaderComponent></HeaderComponent>
+		<div class="container">
+			<router-view/>
+		</div>
 	</div>
-  </div>
 </template>
 
 <script lang="ts">
 	import { Component, Prop, Vue } from 'vue-property-decorator';
 	import HeaderComponent from './components/shared-views/Header.vue';
+	import { SET_STOCKS } from '@/store/types';
 
 	@Component({
 		components: {
@@ -17,7 +18,9 @@
 		}
 	})
 	export default class AppComponent extends Vue {
-
+		created() {
+			this.$store.dispatch(SET_STOCKS);
+		}
 	}
 </script>
 

@@ -10,6 +10,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import StockComponent from './Stock.vue';
 
 import { Stock } from '@/models';
+import StockModule from '@/store/modules/stocks';
 
 @Component({
 	components: {
@@ -17,9 +18,8 @@ import { Stock } from '@/models';
 	}
 })
 export default class StocksComponent extends Vue {
-	private stocks: Stock[] = [];
-	created() {
-		console.log('this is awesome');
+	get stocks() {
+		return this.$store.getters.getStocks;
 	}
 }
 </script>

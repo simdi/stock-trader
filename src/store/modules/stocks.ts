@@ -1,31 +1,41 @@
-import { VuexModule, Module, getModule, Mutation, Action } from 'vuex-module-decorators';
+import { Stock } from '../../models';
+import { SET_STOCKS, RND_STOCKS } from '../types';
+import stocks from '@/data/stocks';
 
-import store from '@/store';
-import { Stock } from '@/models';
-import { SET_STOCKS } from '../types';
+const state = {
+	stocks: []
+};
 
-@Module({
-	namespaced: true,
-	name: 'stocks',
-	store
-})
-class StockModule extends VuexModule {
-	public stock: Stock = <Stock>{};
-	public stocks: Stock[] = [];
+const mutations = {
+	[SET_STOCKS](state: any, stocks: Stock): void {
+		state.stocks = stocks;
+	},
+	[RND_STOCKS] (state: any): void {
 
-	@Mutation
-	[SET_STOCKS] (state: any, stock: Stock): void {
-		state.stocks = stock;
 	}
+};
 
-	@Action
+const getters = {
+	getStocks(state: any): Stock {
+		return state.stocks;
+	}
+};
+
+const actions = {
 	buyStock({commit}: any, stock: Stock): void {
 		commit();
+	},
+	[SET_STOCKS]({ commit }: any): any {
+		commit(SET_STOCKS, stocks);
+	},
+	randomizeStocks({commit}: any): void {
+		commit(RND_STOCKS);
 	}
-	@Action
-	setStock({commit}: any) {
-		commit(SET_STOCKS);
-	}
-}
+};
 
-export default getModule(StockModule);
+export default {
+	state,
+	mutations,
+	actions,
+	getters
+};
