@@ -2,7 +2,7 @@ import { Stock } from '../../models';
 import { SET_STOCKS, RND_STOCKS } from '../types';
 import stocks from '@/data/stocks';
 
-const state = {
+const state: any = {
 	stocks: []
 };
 
