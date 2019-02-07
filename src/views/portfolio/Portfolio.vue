@@ -20,9 +20,6 @@ import StockComponent from './Stock.vue';
 	}
 })
 export default class PortfolioComponent extends Vue {
-    created() {
-		console.log('Stoks', this.stocks);
-	}
 }
 </script>
 

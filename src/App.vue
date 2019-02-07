@@ -2,7 +2,9 @@
 	<div id="app">
 		<HeaderComponent></HeaderComponent>
 		<div class="container">
+		<transition name="slide" mode="out-in">
 			<router-view/>
+		</transition>
 		</div>
 	</div>
 </template>
@@ -17,9 +19,6 @@ import { mapActions } from 'vuex';
 		components: {
 			HeaderComponent
 		},
-		...mapActions('StockModule', {
-			SET_STOCKS
-		})
 	})
 	export default class AppComponent extends Vue {
 		created() {
@@ -32,5 +31,31 @@ import { mapActions } from 'vuex';
 <style lang="scss">
 	.container {
 		padding: 20px !important;
+	}
+	.slide-enter-active {
+        animation: slide-in 100ms ease-out forwards;
+	}
+	.slide-enter-active {
+        animation: slide-out 100ms ease-out forwards;
+	}
+	@keyframes slide-in {
+        from {
+			transform: translateY(-30px);
+			opacity: 0;
+		}
+        to {
+			transform: translateY(0);
+			opacity: 1;
+		}
+	}
+	@keyframes slide-out {
+        from {
+			transform: translateY(0);
+			opacity: 1;
+		}
+        to {
+			transform: translateY(-30px);
+			opacity: 0;
+		}
 	}
 </style>

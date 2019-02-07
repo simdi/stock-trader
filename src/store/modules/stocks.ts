@@ -11,7 +11,9 @@ const mutations = {
 		state.stocks = stocks;
 	},
 	[RND_STOCKS](state: any): void {
-
+        state.stocks.forEach((stock: Stock) => {
+			stock.price = Math.round(stock.price * (1 + Math.random() - 0.5));
+		});
 	}
 };
 
@@ -28,7 +30,7 @@ const actions = {
 	[SET_STOCKS]({ commit }: any): any {
 		commit(SET_STOCKS, stocks);
 	},
-	randomizeStocks({commit}: any): void {
+	[RND_STOCKS]({commit}: any): void {
 		commit(RND_STOCKS);
 	}
 };
