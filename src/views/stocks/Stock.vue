@@ -8,10 +8,12 @@
 			<div class="card-body">
 				<div class="row no-margin">
 					<div class="col-8">
-						<input class="form-control" type="number" v-model="stock.quantity" placeholder="Quantity">
+						<input class="form-control" type="number" v-model="quantity"
+						:class="{ danger: insufficientFund }"
+						placeholder="Quantity">
 					</div>
 					<div class="col-4">
-						<button class="btn btn-success" @click="buyStock();" :disabled="validateInput(stock.quantity)">Buy</button>
+						<button class="btn btn-success" @click="buyStock();" :disabled="validateInput(quantity)">{{ insufficientFund ? 'Insufficient Funds': 'Buy'}}</button>
 					</div>
 				</div>
 			</div>
@@ -23,13 +25,16 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 
 import { Stock } from '@/models';
-import { BUY_STOCKS } from '@/store/types';
-import { mapActions } from 'vuex';
+import { BUY_STOCKS, GET_FUNDS } from '@/store/types';
+import { mapActions, mapGetters } from 'vuex';
 
 @Component({
 	computed: {
+		...mapGetters('PortfolioModule', {
+			funds: GET_FUNDS
+		}),
 		...mapActions('PortfolioModule', {
-			BUY_STOCKS
+			actionBuyStock: BUY_STOCKS
 		}),
 	},
 	props: {
@@ -41,25 +46,33 @@ import { mapActions } from 'vuex';
 })
 export default class StockComponent extends Vue {
 	@Prop() public stock!: Stock;
+	private quantity: number = 0;
 
 	private buyStock(): void {
 		const stock: Stock = <Stock> {
 			id: this.stock.id,
 			name: this.stock.name,
 			price: this.stock.price,
-			quantity: this.stock.quantity
+			quantity: this.quantity
 		};
 		console.log('Payload', stock);
-		this.$store.dispatch(`PortfolioModule/${BUY_STOCKS}`, stock);
+		// this.actionBuyStock(stock);
+		this.$store.dispatch(`StocksModule/${BUY_STOCKS}`, stock);
 	}
 	// Computed methods
-	validateInput(quantity: number): Boolean {
-		console.log(quantity);
+	private validateInput(quantity: number): Boolean {
+		// return (this.insufficientFund || quantity <= 0 || !Number.isInteger(quantity)) ? true : false;
 		return false;
-		// return (quantity <= 0 || !Number.isInteger(quantity)) ? true : false;
+	}
+
+	get insufficientFund(): Boolean {
+		return this.quantity * this.stock.price > this.funds;
 	}
 }
 </script>
 
 <style scoped lang="scss">
+	.danger {
+		border: 1px solid red;
+	}
 </style>

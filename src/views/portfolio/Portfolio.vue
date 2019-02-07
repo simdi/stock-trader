@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<stock-component v-for="stock in stocks" :key="stock.id"></stock-component>
+		<stock-component v-for="stock in stocks" :stock="stock" :key="stock.id"></stock-component>
 	</div>
 </template>
 
@@ -20,7 +20,9 @@ import StockComponent from './Stock.vue';
 	}
 })
 export default class PortfolioComponent extends Vue {
-
+    created() {
+		console.log('Stoks', this.stocks);
+	}
 }
 </script>
 

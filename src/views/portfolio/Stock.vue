@@ -1,17 +1,17 @@
 <template>
 	<div class="col-sm-6 col-md-4 mb-4">
 		<div class="card">
-			<div class="card-header bg-success text-white text-left">
+			<div class="card-header bg-info text-white text-left">
 				{{ stock.name }}
 				<small>(Price: {{ stock.price }} | Quantity: {{ stock.quantity }})</small>
 			</div>
 			<div class="card-body">
 				<div class="row no-margin">
 					<div class="col-8">
-						<input class="form-control" type="number" v-model="stock.quantity" placeholder="Quantity">
+						<input class="form-control" type="number" v-model="quantity" placeholder="Quantity">
 					</div>
 					<div class="col-4">
-						<button class="btn btn-success" @click="sellStock();" :disabled="validateInput(stock.quantity)">Sell</button>
+						<button class="btn btn-info" @click="sellStock();" :disabled="validateInput(quantity)">{{ insufficientQuantity ? 'Not enough stock': 'Sell'}}</button>
 					</div>
 				</div>
 			</div>
@@ -41,13 +41,14 @@ import { BUY_STOCKS, SELL_STOCKS } from '@/store/types';
 })
 export default class StockComponent extends Vue {
 	@Prop() public stock!: Stock;
+	private quantity: number = 0;
 
 	private sellStock(): void {
 		const stock: Stock = <Stock> {
 			id: this.stock.id,
 			name: this.stock.name,
 			price: this.stock.price,
-			quantity: this.stock.quantity
+			quantity: this.quantity
 		};
 		console.log('Payload', stock);
 		// this.$store.dispatch('');
@@ -55,10 +56,16 @@ export default class StockComponent extends Vue {
 	}
 	// Computed methods
 	validateInput(quantity: number): Boolean {
-		return (quantity <= 0 || !Number.isInteger(quantity)) ? true : false;
+		return (this.insufficientQuantity || quantity <= 0 || !Number.isInteger(quantity)) ? true : false;
+	}
+	get insufficientQuantity(): Boolean {
+		return this.quantity > this.stock.quantity;
 	}
 }
 </script>
 
 <style scoped lang="scss">
+	.danger {
+		border: 1px solid red;
+	}
 </style>

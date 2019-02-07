@@ -22,8 +22,8 @@ const getters = {
 };
 
 const actions = {
-	[BUY_STOCKS]({commit}: any, stock: Stock): void {
-		commit(BUY_STOCKS, stock);
+	[BUY_STOCKS]({commit, rootState}: any, stock: Stock): void {
+		commit(`PortfolioModule/${BUY_STOCKS}`, stock, { root: true });
 	},
 	[SET_STOCKS]({ commit }: any): any {
 		commit(SET_STOCKS, stocks);
